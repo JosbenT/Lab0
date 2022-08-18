@@ -1,7 +1,7 @@
 package dataLabs;
 
 public class Lab0P1Wrapper {
-	
+
 	public static interface BaseVector {
 		public double getXComponent();
 		public double getYComponent();
@@ -12,23 +12,23 @@ public class Lab0P1Wrapper {
 		public double dotProduct(BaseVector V);
 		public BaseVector crossProduct(BaseVector V);
 	}
-	
+
 	public static class VectorComponent implements BaseVector {
-		
+
 		private double X;
 		private double Y;
-		
+
 		public VectorComponent(double X, double Y) {
 			/*TODO ADD YOUR CODE HERE*/
-			X = this.X;
-			Y = this.Y;
+			this.X = X;
+			this.Y = Y;
 		}
 
 
 		@Override
 		public double getXComponent() {
 			/*TODO ADD YOUR CODE HERE*/
-			return this.X; //Dummy Return
+			return X; //Dummy Return
 		}
 
 		@Override
@@ -49,9 +49,10 @@ public class Lab0P1Wrapper {
 
 		@Override
 		public BaseVector add(BaseVector V) {
-			/*TODO ADD YOUR CODE HERE*/
-			this.X = V.getXComponent() + X;
-			this.Y = V.getYComponent() + Y; 			return null; //Dummy Return
+			/*TODO ADD YOUR CODE HERE*/ 
+			
+			return V;
+			
 		}
 
 		@Override
@@ -72,7 +73,7 @@ public class Lab0P1Wrapper {
 		public BaseVector crossProduct(BaseVector V) {
 			/**
 			 * TODO ADD YOUR CODE HERE
-			 
+
 			 * Can you do a cross product of 2D vectors?
 			 * If not, what should we do?
 			 * 
@@ -87,11 +88,12 @@ public class Lab0P1Wrapper {
 			/*TODO ADD YOUR CODE HERE*/
 			return 0.0; //Dummy Return
 		}
-		
+
 		@Override
 		public double getAngle() {
 			/*TODO ADD YOUR CODE HERE*/
 			return 0.0; //Dummy Return
 		}	
-	}	
-}}
+	}
+}
+
