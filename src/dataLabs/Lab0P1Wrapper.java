@@ -28,13 +28,13 @@ public class Lab0P1Wrapper {
 		@Override
 		public double getXComponent() {
 			/*TODO ADD YOUR CODE HERE*/
-			return X; //Dummy Return
+			return X; 
 		}
 
 		@Override
 		public double getYComponent() {
 			/*TODO ADD YOUR CODE HERE*/
-			return Y; //Dummy Return
+			return Y; 
 		}
 
 		public void setX(double x) {
@@ -49,7 +49,10 @@ public class Lab0P1Wrapper {
 
 		@Override
 		public BaseVector add(BaseVector V) {
-			/*TODO ADD YOUR CODE HERE*/ 
+			/*TODO ADD YOUR CODE HERE*/
+			setX(this.X + V.getXComponent());
+
+			setY(this.Y + V.getYComponent());
 			
 			return V;
 			
@@ -58,15 +61,17 @@ public class Lab0P1Wrapper {
 		@Override
 		public BaseVector subtract(BaseVector V) {
 			/*TODO ADD YOUR CODE HERE*/
-			this.X = V.getXComponent() - X;
-			this.Y = V.getYComponent() - Y; 
-			return null; //Dummy Return
+			setX(this.X - V.getXComponent());
+
+			setY(this.Y - V.getYComponent());
+			
+			return V;
 		}
 
 		@Override
 		public double dotProduct(BaseVector V) {
 			/*TODO ADD YOUR CODE HERE*/
-			return 0.0; //Dummy Return
+			return this.X*V.getXComponent() + this.Y*V.getYComponent();
 		}
 
 		@Override
@@ -94,6 +99,18 @@ public class Lab0P1Wrapper {
 			/*TODO ADD YOUR CODE HERE*/
 			return 0.0; //Dummy Return
 		}	
+	}
+	
+	public static void main(String[] args) {
+		VectorComponent myVec = new VectorComponent(5, 5);
+		VectorComponent myVec2 = new VectorComponent(10, 10);
+		
+		myVec.add(myVec2);
+		System.out.println(myVec.getXComponent() + " " +  myVec.getYComponent());
+		
+		myVec.subtract(myVec2);
+		System.out.println(myVec.getXComponent() + " " +  myVec.getYComponent());
+
 	}
 }
 
