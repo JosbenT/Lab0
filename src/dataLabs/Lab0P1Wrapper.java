@@ -50,22 +50,16 @@ public class Lab0P1Wrapper {
 		@Override
 		public BaseVector add(BaseVector V) {
 			/*TODO ADD YOUR CODE HERE*/
-			setX(this.X + V.getXComponent());
+			return new VectorComponent(this.X + V.getXComponent(), this.Y + V.getYComponent());
 
-			setY(this.Y + V.getYComponent());
-			
-			return V;
-			
 		}
 
 		@Override
 		public BaseVector subtract(BaseVector V) {
 			/*TODO ADD YOUR CODE HERE*/
-			setX(this.X - V.getXComponent());
+			return new VectorComponent(this.X - V.getXComponent(), this.Y - V.getYComponent());
 
-			setY(this.Y - V.getYComponent());
-			
-			return V;
+
 		}
 
 		@Override
@@ -84,32 +78,41 @@ public class Lab0P1Wrapper {
 			 * 
 			 * Hint: Look up what UnsopportedOperationException does!
 			 */
-			return null; //Dummy Return
+			try { 
+				//this.getMagnitude()*V.getMagnitude()*(Math.abs(this.getAngle()-V.getAngle()));
+			}
+			catch(UnsupportedOperationException e) {
+				System.err.println("INVALID OPERATION");
+			}
+			VectorComponent answer = new VectorComponent(0, 0);
+ 
+			return answer; //Dummy Return
 		}
 
 
 		@Override
 		public double getMagnitude() {
 			/*TODO ADD YOUR CODE HERE*/
-			return 0.0; //Dummy Return
+			return Math.sqrt(Math.pow(this.X, 2) + Math.pow(this.Y, 2));
 		}
 
 		@Override
 		public double getAngle() {
 			/*TODO ADD YOUR CODE HERE*/
-			return 0.0; //Dummy Return
+			return Math.toDegrees(Math.atan(this.Y/this.X));
 		}	
 	}
-	
+
 	public static void main(String[] args) {
 		VectorComponent myVec = new VectorComponent(5, 5);
 		VectorComponent myVec2 = new VectorComponent(10, 10);
-		
-		myVec.add(myVec2);
-		System.out.println(myVec.getXComponent() + " " +  myVec.getYComponent());
-		
-		myVec.subtract(myVec2);
-		System.out.println(myVec.getXComponent() + " " +  myVec.getYComponent());
+
+
+		System.out.println(myVec.add(myVec2).getXComponent() + " " + myVec.add(myVec2).getYComponent());
+
+		System.out.println(myVec2.getMagnitude());
+
+		System.out.println(myVec.getAngle());
 
 	}
 }
