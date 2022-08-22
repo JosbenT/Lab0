@@ -62,14 +62,19 @@ public class Lab0P2Wrapper {
 		@Override
 		public BaseVector add(BaseVector V) {
 			/*TODO ADD YOUR CODE HERE*/
-			return new VectorMagnitude(this.getXComponent() + V.getXComponent(), this.getYComponent() + V.getYComponent());
-
+			double x = this.getXComponent() + V.getXComponent();
+			double y = this.getYComponent() + V.getYComponent();
+			
+			return new VectorMagnitude(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)), Math.toDegrees(Math.atan(y/x)));
 		}
 
 		@Override
 		public BaseVector subtract(BaseVector V) {
 			/*TODO ADD YOUR CODE HERE*/
-			return new VectorMagnitude(this.getXComponent() - V.getXComponent(), this.getYComponent() - V.getYComponent());
+			double x = this.getXComponent() - V.getXComponent();
+			double y = this.getYComponent() - V.getYComponent();
+			
+			return new VectorMagnitude(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)), Math.toDegrees(Math.atan(y/x)));
 		}
 
 		@Override
@@ -101,10 +106,12 @@ public class Lab0P2Wrapper {
 		System.out.println(myVec.getXComponent());
 		System.out.println(myVec.getYComponent());
 		
-		System.out.println(myVec.add(myVec2).getXComponent() + " " + myVec.add(myVec2).getYComponent());
+		VectorMagnitude myVec3 = new VectorMagnitude(myVec.add(myVec2).getXComponent(), myVec.add(myVec2).getYComponent());
 
-		System.out.println(myVec2.getXComponent());
-		System.out.println(myVec2.getYComponent());
+		System.out.println(myVec3.getXComponent() + " " + myVec3.getYComponent());
+
+//		System.out.println(myVec2.getXComponent());
+//		System.out.println(myVec2.getYComponent());
 
 		
 	}
