@@ -227,8 +227,5 @@ public class Quiz3AWrapper {
 			
 		}
 	}
-	public static void main(String[] args) {
-		List<E> = new LIst()
-	}
 }
 
