@@ -3,30 +3,26 @@ package lab4;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
-public class Lab06P2Wrapper {
+public class Lab03P5Wrapper {
 
 	public static interface List<E> extends Iterable<E>{
 		public void add(E elm);
 		public void add(E elm, int index);
 		public boolean remove(int index);
+		public boolean remove(E elm);
 		public E get(int index);
 		public E set(E elm, int index);
 		public int size();
-		public boolean remove(E elm);
 		public int removeAll(E elm);
 		public void clear();
 		public boolean contains(E elm);
-		public E first();
-		public E last();
 		public int firstIndex(E elm);
 		public int lastIndex(E elm);
 		public boolean isEmpty();
-		public int replaceAll(E e, E f);
 
 	}
 
-	public static class DoublyLinkedList<E> implements List<E> {
+	public static class CircularDoublyLinkedList<E> implements List<E> {
 
 		private class Node {
 			private E value;
@@ -108,32 +104,35 @@ public class Lab06P2Wrapper {
 		private int currentSize;
 
 
-		public DoublyLinkedList() {
-			header = new Node();
-			trailer = new Node();
-			header.setNext(trailer);
-			trailer.setPrev(header);
+		public CircularDoublyLinkedList() {
+			/**
+			 * Set dummy nodes to point to each other
+			 * 
+			 * 		 --> header <--> trailer <--
+			 * 		 |					       |
+			 *       __________________________
+			 * 
+			 */
+			header = new Node(null, trailer, trailer);
+			trailer = new Node(null, header, header);
 			currentSize = 0;
 		}
 
 		@Override
 		public void add(E obj) {
+			
 			Node nextNode = this.trailer;
 			Node prevNode = this.trailer.getPrev();
 			Node newNode = new Node(obj,nextNode,prevNode);
-
-			/* TODO With a Doubly Linked List (with header AND trailer), this is easy.
-			 * The new node must be inserted before the trailer, and that's it.
-			 * You could use a different constructor, or just add some statements below.
-			 */
+			
 			this.trailer.setPrev(newNode);
 			prevNode.setNext(newNode);
 			currentSize++;
-
 		}
 
 		@Override
 		public void add(E elm, int index) {
+			/*TODO ADD YOUR CODE HERE*/
 			Node curNode, newNode, nextNode;
 
 			/* First confirm index is a valid position
@@ -144,8 +143,14 @@ public class Lab06P2Wrapper {
 				add(elm); // Use our "append" method
 			else {
 				// Get predecessor node (at position index - 1)
-				curNode = get_node(index - 1);
-				nextNode = get_node(index);
+				curNode = header;
+				for(int i = -1; i < index-1; i++) {
+					curNode = curNode.getNext();
+				}
+				nextNode = curNode.getNext();
+				for(int i = -1; i < index; i++) {
+					nextNode = nextNode.getNext();
+				}
 				/* The new node must be inserted between curNode and curNode's next
 				   Note that if index = 0, curNode will be header node */
 				newNode = new Node(elm, curNode.getNext(), curNode);
@@ -206,8 +211,6 @@ public class Lab06P2Wrapper {
 
 			return true;
 		}
-
-		/* Private method to return the node at position index */
 		private Node get_node(int index) {
 			Node curNode;
 
@@ -228,12 +231,12 @@ public class Lab06P2Wrapper {
 			int counter = 0;
 			Node curNode = header;
 			Node nextNode = curNode.getNext();
-			
 			while (nextNode != trailer) { 
 				if (nextNode.getValue().equals(obj)) {
 					nextNode.getPrev().setNext(nextNode.getNext());
 					nextNode.getNext().setPrev(nextNode.getPrev());
-	
+
+					
 					nextNode.clear();
 					currentSize--;
 					counter++;
@@ -257,6 +260,7 @@ public class Lab06P2Wrapper {
 
 		@Override
 		public E set(E elm, int index) {
+			/*TODO ADD YOUR CODE HERE*/
 			// get_node allows for index to be -1, but we don't want set to allow that
 			if (index < 0 || index >= size())
 				throw new IndexOutOfBoundsException();
@@ -267,17 +271,8 @@ public class Lab06P2Wrapper {
 		}
 
 		@Override
-		public E first() {
-			return get(0);
-		}
-
-		@Override
-		public E last() {
-			return get(size()-1);
-		}
-
-		@Override
 		public int firstIndex(E obj) {
+			/*TODO ADD YOUR CODE HERE*/
 			Node curNode = header.getNext();
 			int curPos = 0;
 			// Traverse the list until we find the element or we reach the end
@@ -293,6 +288,7 @@ public class Lab06P2Wrapper {
 
 		@Override
 		public int lastIndex(E obj) {
+			/*TODO ADD YOUR CODE HERE*/
 			Node curNode = trailer.getPrev();
 			int curPos = size() - 1;
 			// Traverse the list (backwards) until we find the element or we reach the beginning
@@ -300,27 +296,30 @@ public class Lab06P2Wrapper {
 				curPos--;
 				curNode = curNode.getPrev();
 			}
-			return curPos; // Will be -1 if we reached the header
+			return curPos;
 		}
 
 		@Override
 		public int size() {
+			/*TODO ADD YOUR CODE HERE*/
 			return currentSize;
 		}
 
 		@Override
 		public boolean isEmpty() {
+			/*TODO ADD YOUR CODE HERE*/
 			return size() == 0;
 		}
 
 		@Override
 		public boolean contains(E obj) {
+			/*TODO ADD YOUR CODE HERE*/
 			return firstIndex(obj) != -1;
 		}
 
 		@Override
 		public void clear() {
-			// Avoid throwing an exception if the list is already empty
+			/*TODO ADD YOUR CODE HERE*/
 			while (size() > 0)
 				remove(0);
 		}
@@ -329,22 +328,6 @@ public class Lab06P2Wrapper {
 		public Iterator<E> iterator() {
 			return new ListIterator();
 		} //DO NOT DELETE, TESTS WILL FAIL
-
-		
-		@Override
-		public int replaceAll(E e, E f) {
-			/*ADD YOUR CODE HERE*/
-			int counter = 0;
-			Node temp = this.header.getNext();
-			while(temp.getNext() != null) {
-				if(temp.value.equals(e)) {
-					temp.setValue(f);
-					counter++;
-				}
-				temp = temp.next;
-			}
-			return counter;
-		}
 
 	}
 }

@@ -296,42 +296,39 @@ public class Lab05P1Wrapper {
 		public void reverse() {
 			
 	        Node<E> prev = null;
-	        Node<E> current = this.header;
+	        Node<E> current = this.header.getNext();
 	        Node<E> next = null;
 	        while (current != null) {
-	            next = current.next;
-	            current.next = prev;
+	            next = current.getNext();
+	            current.setNext(prev);
 	            prev = current;
 	            current = next;
 	        }
-	        this.header = prev;
+	        this.header.setNext(prev);
 		}
 
 	}
 	public static void main(String[] args) {
 		SinglyLinkedList<String> list = new SinglyLinkedList<String>();
-//        list.header = new Nodes(85);
-//        list.header.next = new Node(15);
-//        list.header.next.next = new Node(4);
-//        list.header.next.next.next = new Node(20);
+
 		list.add("Bilbo");
 		list.add("Fili");
 		list.add("Kili");
 		list.add("Bombur");
  
-        System.out.println("Given Linked list");
-        int i = 0;
-        for(lab4.Lab05P1Wrapper.SinglyLinkedList.Node<String> temp = list.header; i <= list.size(); temp = temp.getNext()) {
-        	System.out.println(temp.getElement());
-        	i++;
-        }
-        System.out.println("");
-        list.reverse();
-        i = 0;
-        System.out.println("Reversed linked list ");
-        for(lab4.Lab05P1Wrapper.SinglyLinkedList.Node<String> temp = list.header; i <= list.size(); temp = temp.getNext()) {
-        	System.out.println(temp.getElement());
-        	i++;
-        }
+//        System.out.println("Given Linked list");
+//        int i = 0;
+//        for(lab4.Lab05P1Wrapper.SinglyLinkedList.Node<String> temp = list.header; i <= list.size(); temp = temp.getNext()) {
+//        	System.out.println(temp.getElement());
+//        	i++;
+//        }
+//        System.out.println("");
+//        list.reverse();
+//        i = 0;
+//        System.out.println("Reversed linked list ");
+//        for(lab4.Lab05P1Wrapper.SinglyLinkedList.Node<String> temp = list.header; i <= list.size(); temp = temp.getNext()) {
+//        	System.out.println(temp.getElement());
+//        	i++;
+//        }
 	}
 }

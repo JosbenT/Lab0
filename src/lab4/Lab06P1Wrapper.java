@@ -3,8 +3,7 @@ package lab4;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
-public class Lab06P2Wrapper {
+public class Lab06P1Wrapper {
 
 	public static interface List<E> extends Iterable<E>{
 		public void add(E elm);
@@ -228,15 +227,31 @@ public class Lab06P2Wrapper {
 			int counter = 0;
 			Node curNode = header;
 			Node nextNode = curNode.getNext();
-			
+
+			/* We used the following in ArrayList, and it would also work here,
+			 * but it would have running time of O(n^2).
+			 * 
+			 * while (remove(obj))
+			 * 		counter++;
+			 */
+
+			// Traverse the entire list
 			while (nextNode != trailer) { 
 				if (nextNode.getValue().equals(obj)) {
+					// Remove nextNode
+
+					/* TODO For a DLL, what needs to be done?
+					 * You can declare more Node variables if it helps make things clear.
+					 */
 					nextNode.getPrev().setNext(nextNode.getNext());
 					nextNode.getNext().setPrev(nextNode.getPrev());
-	
+
+					
 					nextNode.clear();
 					currentSize--;
 					counter++;
+					/* Node that was pointed to by nextNode no longer exists
+					   so reset it such that it's still the node after curNode */
 					nextNode = curNode.getNext();
 				}
 				else {
@@ -345,6 +360,5 @@ public class Lab06P2Wrapper {
 			}
 			return counter;
 		}
-
 	}
 }
