@@ -238,7 +238,9 @@ public class Quiz3bWrapper {
 		test.add("Bombur");
 		test.add("Oin");
 
-		System.out.println(test.keepEven());
+		for(String x: test) {
+			System.out.println(x);
+		}
 
 	}
 

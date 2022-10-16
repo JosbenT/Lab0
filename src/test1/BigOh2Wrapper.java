@@ -3,57 +3,59 @@ package test1;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import test1.LinkedListWrapper.SinglyLinkedList;
+
 
 
 public class BigOh2Wrapper {
 
 	public static interface List<E> extends Iterable<E> {
-		
+
 		public int size();
-		
+
 		public boolean isEmpty();
-		
+
 		public boolean isMember(E e);
-		
+
 		public int firstIndexOf(E e);
-		
+
 		public int lastIndexOf(E e);
 
 		public void add(E e);
-		
+
 		public void add(E e, int index);
-		
+
 		public E get(int index);
-		
+
 		public E remove(int index);
-		
-	    public boolean remove(E e);
-	    
-	    public int removeAll(E e);
-	    
+
+		public boolean remove(E e);
+
+		public int removeAll(E e);
+
 		public E replace(int index, E newElement);
-		
+
 		public void clear();
-		
+
 		public Object[] toArray();	
-		
+
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 
 	public static class ArrayList<E> implements List<E> {
 		@SuppressWarnings("hiding")
 		private class ArrayListIterator<E> implements Iterator<E> {
-			
+
 			private int currentPosition;
-			
-			
+
+
 
 			public ArrayListIterator() {
 				super();
 				this.currentPosition = 0;
-				
+
 			}
 
 			@Override
@@ -71,13 +73,13 @@ public class BigOh2Wrapper {
 					throw new NoSuchElementException();
 				}
 			}
-			
+
 		}
-	 	
+
 		private E[] elements;
 		private int currentSize;
 		private static final int DEFAULT_SIZE = 10;
-		
+
 		public ArrayList(int initialSize) {
 			if (initialSize < 1) {
 				throw new IllegalArgumentException("Size must be at least 1.");
@@ -195,9 +197,9 @@ public class BigOh2Wrapper {
 		public Object[] toArray() {
 			Object[] result = (E[]) new Object[this.size()];
 			System.arraycopy(this.elements, 0, result, 0, this.size());
-//			for (int i=0; i < this.size(); ++i) {
-//				result[i] = this.elements[i];
-//			}
+			//			for (int i=0; i < this.size(); ++i) {
+			//				result[i] = this.elements[i];
+			//			}
 			return result;
 		}
 
@@ -240,21 +242,52 @@ public class BigOh2Wrapper {
 
 
 	}
-	
+
 	public static ArrayList<String> arrayListMerger(ArrayList<String> L1, ArrayList<String> L2) {
-		 // ADD CODE HERE
+		// ADD CODE HERE
 		ArrayList<String> merged = new ArrayList<String>();
-		for(int i = 0; i < L1.size(); i++) {
-			for(int j = 0; j < L2.size(); j++) {
-				if(L1.get(i).compareTo(L2.get(j)) > 1) {
-					merged.add(L1.get(i));	
-				}
-				else {
-					merged.add(L2.get(j));
-				}
+		for(String i : L1) {
+			for(String j : L2) {
+				if(i.compareTo(j) < 0) { 
+					merged.add(i); 
+					L1.remove(i);
+					}
+				else if(i.compareTo(j) > 0) { 
+					merged.add(j); 
+					L2.remove(i);
+					}
+				else 
+					merged.add(i);
+					merged.add(j);
+					L1.remove(i);
+					L2.remove(i);
+
 			}
 		}
 		return merged;
 	}
+	public static void main(String[] args) {
+		ArrayList<String> L1 = new ArrayList<>();
+		L1.add("Bombur");
+		L1.add("Fili");
+		L1.add("Gloin");
+		L1.add("Kili");
+		L1.add("Oin");
+		
+		
+		ArrayList<String> L2 = new ArrayList<>();
+		L2.add("Aragorn");
+		L2.add("Durin");
+		L2.add("Gandalf");
+		L2.add("Saruman");
+		L2.add("Thorin");
+		
+		ArrayList<String> output = arrayListMerger(L1, L2);
+		for(String x : output) {
+			System.out.println(x);
+		}
+
+	}
+	
 }
 
