@@ -1,7 +1,5 @@
 package lab6;
-
 import java.util.Comparator;
-
 
 public class Lab05P1Wrapper {
 
@@ -90,6 +88,27 @@ public class Lab05P1Wrapper {
 		@Override
 		public int removeAll(E e) {
 			// TODO ADD YOUR CODE HERE
+			//			int counter = 0;
+			//			Node curNode = header;
+			//			Node nextNode = curNode.getNext();
+			//			while (nextNode != trailer) { 
+			//				if (nextNode.getValue().equals(obj)) {
+			//					nextNode.getPrev().setNext(nextNode.getNext());
+			//					nextNode.getNext().setPrev(nextNode.getPrev());
+			//
+			//					
+			//					nextNode.clear();
+			//					currentSize--;
+			//					counter++;
+			//					nextNode = curNode.getNext();
+			//				}
+			//				else {
+			//					curNode = nextNode;
+			//					nextNode = nextNode.getNext();
+			//				}
+			//			}
+			//			return counter;
+			
 			return 0;
 		}
 
@@ -128,14 +147,14 @@ public class Lab05P1Wrapper {
 			//			}
 			//			return false;
 			if(this.head.getNext() == null) { return false; }
-			
+
 			else if(this.head.getNext().getValue().equals(e)) { return true; }
-			
+
 			else {
 				this.head = this.head.getNext();
 				return this.contains(e);
 			}
-		
+
 		}
 
 		@Override
@@ -212,10 +231,14 @@ public class Lab05P1Wrapper {
 		/**
 		 * (Part 1)
 		 * TODO ADD YOUR DESCRIPTION HERE  
+		 * Returns the value in the node corresponding to the index value i in 
+		 * the linked list whose first node is referenced by f, not unlike in the 
+		 * recGet method. The difference would be that at the same time it removes
+		 * said value from the linked list. 
 		 * 
-		 * @param f		TODO
-		 * @param i		TODO
-		 * @return		TODO
+		 * @param f		First node of linked list to traverse
+		 * @param i		Index value of node whose value should be returned
+		 * @return		Node to be removed
 		 */
 		@SuppressWarnings("unused")
 		private static <E> Node<E> recRemove(Node<E> f, int i) {
@@ -242,27 +265,33 @@ public class Lab05P1Wrapper {
 		 * @param i		Index value of where new node must be inserted
 		 * @param e		Value or element that must be contained within the new node
 		 */
-		
-		//https://stackoverflow.com/questions/45359640/how-to-add-elements-in-a-linked-list-by-recursion
+
+		//REMINDER : https://stackoverflow.com/questions/45359640/how-to-add-elements-in-a-linked-list-by-recursion
 		private static <E> Node<E> recAdd(Node<E> f, int i, E e) { 
-			if (f.next != null) {
-			    return recAdd(f.next, i, e);      
-			  } else {
-			    return f.next = new Node(e, null);
-			  }
-		} 
+//			if (f.next != null) {
+//				return recAdd(f.next, i, e);      
+//			} else {
+//				return f.next = new Node(e, null);
+//			}
+			return null;
+		}
 
 
 		/**
 		 * (Part 1)
-		 * TODO ADD YOUR DESCRIPTION HERE  
+		 * TODO ADD YOUR DESCRIPTION HERE
+		 * Sets a desired element into the target node whose first node is being
+		 * referenced by f so that the new node contains the data element e and it
+		 * ends up occupying the position with index value i.
+		 *   
 		 * 
-		 * @param f		TODO
-		 * @param i		TODO
-		 * @return		TODO
+		 * @param f		First node of linked list where value must be inserted
+		 * @param i		Index value of where new node must be set
+		 * @return		Value or element that must be set within the new node
 		 */
 		private static <E> E recSet(Node<E> f, int index, E e) { 
 			/* TODO (Part 5) ADD YOUR CODE HERE*/
+			
 			return null; //Dummy Return
 		}
 
@@ -293,7 +322,7 @@ public class Lab05P1Wrapper {
 			System.out.println(e);
 		}
 
-		/*Uncomment once you have implemented recAdd()
+		/*Uncomment once you have implemented recAdd()*/
 		list.add(100);    // Test adding without position
 		list.add(0, 1);   // Test adding at the beginning
 		list.add(2, 200); // Test adding at the end
@@ -301,7 +330,7 @@ public class Lab05P1Wrapper {
 
 		for (int i=20, j=1; i< 50; i+=5, j++)
 			list.add(j, i);
-		 */
+		 
 
 
 		showList(list); //recGet() is already implemented
