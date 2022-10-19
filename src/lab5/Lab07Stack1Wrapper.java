@@ -112,30 +112,22 @@ public class Lab07Stack1Wrapper {
 
 	public static boolean isPalindrome(String s) {
 		/*ADD YOUR CODE HERE*/
+		s = s.replaceAll("\\s+", "");
 		SinglyLinkedStack<Character> temp = new SinglyLinkedStack<>();
 		for(int i = 0; i < s.length(); i++) {
 			temp.push(s.charAt(i));
 		}
+		int i = 0;
 		while(!temp.isEmpty()) {
-			int i = s.length()-1;
-			if(!temp.pop().equals(s.charAt(i--))) { return true; }
+ 			if(!temp.pop().equals(s.charAt(i++))) { return false; }
 		}
-		return false;
+		return true;
 	}
 	public static void main(String[] args) {
-		SinglyLinkedStack<Character> input =  new SinglyLinkedStack<>();
-		input.push('g');
-		input.push('i');
-		input.push('r');
-		input.push('a');
-		input.push('f');
-		input.push('a');
-		input.push('r');
-		input.push('i');
-		input.push('g');
 		
-
 		System.out.println(isPalindrome("pop"));
+		System.out.println(isPalindrome("my gym"));
+		System.out.println(isPalindrome("Hello, World!"));
 
 
  	}
