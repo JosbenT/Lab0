@@ -88,52 +88,48 @@ public class Lab05P1Wrapper {
 		@Override
 		public int removeAll(E e) {
 			// TODO ADD YOUR CODE HERE
-			//			int counter = 0;
-			//			Node curNode = header;
-			//			Node nextNode = curNode.getNext();
-			//			while (nextNode != trailer) { 
-			//				if (nextNode.getValue().equals(obj)) {
-			//					nextNode.getPrev().setNext(nextNode.getNext());
-			//					nextNode.getNext().setPrev(nextNode.getPrev());
-			//
-			//					
-			//					nextNode.clear();
-			//					currentSize--;
-			//					counter++;
-			//					nextNode = curNode.getNext();
-			//				}
-			//				else {
-			//					curNode = nextNode;
-			//					nextNode = nextNode.getNext();
-			//				}
-			//			}
-			//			return counter;
-			
+
 			return 0;
 		}
 
 		@Override
 		public E first() {
 			// TODO ADD YOUR CODE HERE
-			return this.head.getNext().getValue();
+			return get(0);
 		}
 
 		@Override
 		public E last() {
 			// TODO ADD YOUR CODE HERE
-			return this.head.getNext().getNext().getValue();
+			return get(currentSize - 1);
 		}
 
 		@Override
 		public int firstIndex(E e) {
 			// TODO ADD YOUR CODE HERE
-			return 0;
+			return recFIndex(head, e, currentSize);
+		}
+		public int recFIndex(Node<E> f, E e, int i) {
+			if(i == 0) {
+				return -1; 
+			}
+			else if(f.getValue().equals(e)) {
+				return i;
+			}
+			return recFIndex(f.getNext(), e, ++i);
 		}
 
 		@Override
 		public int lastIndex(E e) {
 			// TODO ADD YOUR CODE HERE
-			return 0;
+			return recLIndex(head, e, currentSize, currentSize);
+		}
+		public int recLIndex(Node<E> f, E e, int i, int last) {
+			if(f.getValue().equals(e)) { last = i; }
+			if(f.getNext() == null) { return last; }
+			
+			return recLIndex(f.getNext(), e, ++i, last);
+
 		}
 
 		@Override
@@ -160,7 +156,11 @@ public class Lab05P1Wrapper {
 		@Override
 		public void clear() {
 			// TODO ADD YOUR CODE HERE
-
+			//			while (size() > 0)
+			//				remove(0);
+			if(size() <= 0) { return; }
+			this.remove(0);
+			this.clear();
 		}
 
 		/*TODO (Part 2) IMPLEMENT THE MISSING INTERFACE METHODS HERE*/
@@ -193,7 +193,11 @@ public class Lab05P1Wrapper {
 		@Override
 		public boolean remove(int index) {
 			/*TODO (Part 4) ADD YOUR CODE HERE*/
-			return false; //Dummy Return
+			if (index < 0 || index >= size()) 
+				throw new IndexOutOfBoundsException("RecursiveLinkedList.set: invalid index = " + index); 
+			head = recRemove(head, index);
+			currentSize--;
+			return true;
 		}
 
 		@Override
@@ -242,16 +246,16 @@ public class Lab05P1Wrapper {
 		 */
 		@SuppressWarnings("unused")
 		private static <E> Node<E> recRemove(Node<E> f, int i) {
-			if (i == 0) { 
-				Node<E> ntd = f; 
-				f = f.getNext(); 
-				ntd.clear(); 
-			}
-			else
-				f.setNext(recRemove(f.getNext(), i-1)); 
-
-			return f; 
-		} 
+			if(i == 0) {
+				
+				Node<E> temp = f;
+				f = f.getNext();
+				temp.clear();
+				
+			} else  f.setNext(recRemove(f.getNext(), --i));
+			
+			return f;
+		}
 
 		/**
 		 * Inserts a new node in the linked list whose first node is being
@@ -266,14 +270,14 @@ public class Lab05P1Wrapper {
 		 * @param e		Value or element that must be contained within the new node
 		 */
 
-		//REMINDER : https://stackoverflow.com/questions/45359640/how-to-add-elements-in-a-linked-list-by-recursion
 		private static <E> Node<E> recAdd(Node<E> f, int i, E e) { 
-//			if (f.next != null) {
-//				return recAdd(f.next, i, e);      
-//			} else {
-//				return f.next = new Node(e, null);
-//			}
-			return null;
+			if(i == 0) {
+				Node<E> newNode = new Node<E>(e,f);
+				return newNode;
+			} else {
+				f.setNext(recAdd(f.getNext(), --i, e));
+			}
+			return f;
 		}
 
 
@@ -291,8 +295,17 @@ public class Lab05P1Wrapper {
 		 */
 		private static <E> E recSet(Node<E> f, int index, E e) { 
 			/* TODO (Part 5) ADD YOUR CODE HERE*/
-			
-			return null; //Dummy Return
+			try {
+				if(index == 0) {
+					f.setValue(e);
+				} else {
+					recSet(f.getNext(), --index, e);
+				}
+				return e;
+				
+			} catch (Exception e1) {
+				throw new IndexOutOfBoundsException();
+				}	
 		}
 
 		@SuppressWarnings("unchecked")
@@ -306,7 +319,6 @@ public class Lab05P1Wrapper {
 		}
 
 	}
-
 	public static void main(String[] args) {
 		listTester("Testing the List ADT based on recursive singly linked list (SLRIndexList): ",
 				new RecursiveLinkedList<Integer>());
@@ -321,7 +333,7 @@ public class Lab05P1Wrapper {
 		catch (Exception e) {
 			System.out.println(e);
 		}
-
+		
 		/*Uncomment once you have implemented recAdd()*/
 		list.add(100);    // Test adding without position
 		list.add(0, 1);   // Test adding at the beginning
@@ -330,19 +342,19 @@ public class Lab05P1Wrapper {
 
 		for (int i=20, j=1; i< 50; i+=5, j++)
 			list.add(j, i);
-		 
-
-
+		
+		
+		
 		showList(list); //recGet() is already implemented
 
 
-		/*Uncomment once you have implemented remove()
+		/*Uncomment once you have implemented remove()*/
 		showListAfterDeleting(list, 4);
 		showListAfterDeleting(list, 0);   // Test deleting at beginning
 		showListAfterDeleting(list, 30);  // Test deleting at invalid index
 		showListAfterDeleting(list, 7);   // Test deleting at end
-		 */
-
+		
+		
 		/*Uncommment once you have implemented recAdd()
 		showListAfterAdding(list, 3, 700);
 		showListAfterAdding(list, 0, 700);
@@ -352,7 +364,7 @@ public class Lab05P1Wrapper {
 		showListAfterAdding(list, 7, 1001);
 		showListAfterAdding(list, 13, 1002);
 		showListAfterAdding(list, 3, 1002);
-		 */
+		*/
 
 
 		/*Uncomment once you have implemented recSet()
@@ -361,9 +373,8 @@ public class Lab05P1Wrapper {
 		showListAfterReplacingElement(list, 2,  2222);
 		showListAfterReplacingElement(list, 1,  1511);
 		showListAfterReplacingElement(list, list.size()-1, 404);
-		 */
-
-
+		*/
+		
 	}
 
 
@@ -376,7 +387,7 @@ public class Lab05P1Wrapper {
 			System.out.println(e);
 		}
 	}
-
+	
 	private static void showSize(List<Integer> list) {
 		System.out.println("\nSize of the list is: "+list.size());
 	}
@@ -384,7 +395,7 @@ public class Lab05P1Wrapper {
 		System.out.println("\n*** The " + list.size() + " elements in the list are: ");
 		int lpindex = list.size();
 		for (int i=0; i < lpindex; i++)
-			showElement(list,i);
+		    showElement(list,i);
 	}
 
 	private static void showListAfterDeleting(List<Integer> list, int pos) {
